@@ -6,6 +6,7 @@ import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { MasterLogin } from './components/MasterLogin';
 import { ControlPanel } from './components/ControlPanel';
+import { AuthTokenEdit } from './components/AuthTokenEdit';
 
 export default class App extends Component {
     displayName = App.name
@@ -18,6 +19,7 @@ export default class App extends Component {
                 <Route path='/fetchdata' component={FetchData} />
                 <Route path='/masterlogin' component={MasterLogin} />
                 <Route path='/controlpanel' component={ControlPanel} />
+                <Route path='/authtoken/:id' component={AuthTokenEdit} />
             </Layout>
         );
     }

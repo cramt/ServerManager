@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ServerManager {
@@ -20,8 +21,12 @@ namespace ServerManager {
                 if (!Directory.Exists(TOKEN_DIR)) {
                     Directory.CreateDirectory(TOKEN_DIR);
                 }
-                Directory.GetFiles(TOKEN_DIR).ToList()
-                    .Where(x => x.Substring(x.Length - 4, x.Length) == TOKEN_EXT)
+                int b = (Directory.GetFiles(TOKEN_DIR).ToList()
+                    .Select(x => {
+                        var temp_a = x.Split("\\");
+                        return temp_a[temp_a.Length - 1];
+                    })
+                    .Where(x => x.Substring(x.Length - 4) == TOKEN_EXT)
                     .Select(x => x.Substring(0, x.Length - 4))
                     .Select(x => {
                         _locks.Add(x, new object());
@@ -29,12 +34,12 @@ namespace ServerManager {
                     }).Select(x => {
                         Read(x);
                         return x;
-                    });
+                    }).Count());
             }
             private static Dictionary<string, AuthToken> _tokens = new Dictionary<string, AuthToken>();
             private static Dictionary<string, object> _locks = new Dictionary<string, object>();
             private static void UpdateTokenTimeout() {
-                DateTime now = DateTime.Now;
+                double now = Program.DateTimeToUnixTimeStamp(DateTime.UtcNow);
                 List<string> toDelete = _tokens.Where(x => x.Value.ExpirationDate < now).Select(x => x.Key).ToList();
                 string[] copiedToDelete = new string[toDelete.Count];
                 toDelete.ToList().CopyTo(copiedToDelete);
@@ -52,7 +57,7 @@ namespace ServerManager {
                 }
             }
             public static AuthToken GenerateNew() {
-                AuthToken token = AuthToken.GenerateNew(DateTime.Now.AddDays(30), Program.config.servers.Select(x => x.name));
+                AuthToken token = AuthToken.GenerateNew(Program.DateTimeToUnixTimeStamp(DateTime.UtcNow.AddDays(30)), Program.config.servers.Select(x => x.name));
                 _locks.Add(token.Token, new object());
                 _tokens.Add(token.Token, token);
                 Task.Factory.StartNew(() => {
@@ -136,13 +141,13 @@ namespace ServerManager {
         }
 
 
-        public DateTime ExpirationDate { get; set; }
+        public double ExpirationDate { get; set; }
         public string Token { get; set; }
         public List<string> ServersAuthorized { get; set; }
         private AuthToken() {
 
         }
-        private static AuthToken GenerateNew(DateTime expiration, IEnumerable<string> servers = null) {
+        private static AuthToken GenerateNew(double expiration, IEnumerable<string> servers = null) {
             if (servers == null) {
                 servers = new List<string>();
             }

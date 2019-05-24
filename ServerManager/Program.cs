@@ -12,10 +12,19 @@ using Newtonsoft.Json;
 
 namespace ServerManager {
     public class Program {
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp) {
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
+        public static double DateTimeToUnixTimeStamp(DateTime dateTime) {
+            return (dateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+        }
         public static Config config;
         public static void Main(string[] args) {
             config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "config.json")));
             AuthToken.AuthTokenHandler.Init();
+            AuthToken.AuthTokenHandler.GenerateNew();
             CreateWebHostBuilder(args).Build().Run();
             Thread.Sleep(-1);
         }

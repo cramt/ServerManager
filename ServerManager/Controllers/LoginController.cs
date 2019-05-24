@@ -13,7 +13,11 @@ namespace ServerManager.Controllers {
         }
         [HttpPost("Login")]
         public bool Login([FromBody] LoginArguments loginArguments) {
-            return (Program.config.root.username == loginArguments.username && Program.config.root.password == loginArguments.password);
+            return Authorize(loginArguments);
+        }
+
+        public static bool Authorize(LoginArguments arguments) {
+            return Program.config.root.username == arguments.username && Program.config.root.password == arguments.password;
         }
 
     }

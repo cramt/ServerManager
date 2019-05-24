@@ -4,6 +4,7 @@ import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap-typescript';
 import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 import { MasterLogin } from './MasterLogin';
+import { AuthorizedComponent } from './AuthorizedComponent';
 
 export class NavMenu extends Component {
     displayName = NavMenu.name
@@ -40,7 +41,7 @@ export class NavMenu extends Component {
                             </NavItem>
                         </LinkContainer>
                         {(() => {
-                            if (MasterLogin.username != null && MasterLogin.password != null) {
+                            if (AuthorizedComponent.username != null && AuthorizedComponent.password != null) {
                                 return <LinkContainer to={'/controlpanel'}>
                                     <NavItem>
                                         <Glyphicon glyph='th-list' /> Control Panel

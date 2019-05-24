@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { AuthorizedComponent } from './AuthorizedComponent';
 
-export class MasterLogin extends Component<RouteComponentProps<{}>, {}> {
-    displayName = MasterLogin.name
+export class TokenLogin extends Component<RouteComponentProps<{}>, {}> {
+    displayName = TokenLogin.name
     constructor(props: RouteComponentProps<{}>) {
         super(props);
     }
