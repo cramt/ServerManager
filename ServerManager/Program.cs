@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,7 @@ namespace ServerManager {
             config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "config.json")));
             AuthToken.AuthTokenHandler.Init();
             CreateWebHostBuilder(args).Build().Run();
+            Thread.Sleep(-1);
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

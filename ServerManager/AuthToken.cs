@@ -33,8 +33,21 @@ namespace ServerManager {
             }
             private static Dictionary<string, AuthToken> _tokens = new Dictionary<string, AuthToken>();
             private static Dictionary<string, object> _locks = new Dictionary<string, object>();
+            private static void UpdateTokenTimeout() {
+                DateTime now = DateTime.Now;
+                List<string> toDelete = _tokens.Where(x => x.Value.ExpirationDate < now).Select(x => x.Key).ToList();
+                string[] copiedToDelete = new string[toDelete.Count];
+                toDelete.ToList().CopyTo(copiedToDelete);
+                copiedToDelete.ToList().ForEach(x => {
+                    Task.Factory.StartNew(() => {
+                        Delete(x);
+                    });
+                });
+
+            }
             public static IReadOnlyList<AuthToken> Tokens {
                 get {
+                    UpdateTokenTimeout();
                     return _tokens.Select(x => x.Value).ToList();
                 }
             }
@@ -43,7 +56,12 @@ namespace ServerManager {
                 _locks.Add(token.Token, new object());
                 _tokens.Add(token.Token, token);
                 Task.Factory.StartNew(() => {
-                    Write(token);
+                    try {
+                        Write(token);
+                    }
+                    catch (Exception e) {
+                        Console.WriteLine(e.ToString());
+                    }
                 });
                 return token;
             }
@@ -92,6 +110,23 @@ namespace ServerManager {
                 }
                 return authToken;
             }
+            public static void Delete(AuthToken token) {
+                Delete(token.Token);
+            }
+            public static void Delete(string token) {
+                if (!_locks.ContainsKey(token)) {
+                    throw new ArgumentException("tokens lock doesnt exist");
+                }
+                string pathToToken = Path.Combine(Directory.GetCurrentDirectory(), "tokens", token + ".tkn");
+                _tokens.Remove(token);
+                lock (_locks[token]) {
+                    if (!File.Exists(pathToToken)) {
+                        throw new ArgumentException("token file doesnt exist");
+                    }
+                    File.Delete(pathToToken);
+                }
+                _locks.Remove(token);
+            }
             public static void Update(AuthToken token) {
                 _tokens[token.Token] = token;
                 Task.Factory.StartNew(() => {
@@ -101,9 +136,12 @@ namespace ServerManager {
         }
 
 
-        public DateTime ExpirationDate { get; private set; }
-        public string Token { get; private set; }
-        public List<string> ServersAuthorized { get; private set; }
+        public DateTime ExpirationDate { get; set; }
+        public string Token { get; set; }
+        public List<string> ServersAuthorized { get; set; }
+        private AuthToken() {
+
+        }
         private static AuthToken GenerateNew(DateTime expiration, IEnumerable<string> servers = null) {
             if (servers == null) {
                 servers = new List<string>();
@@ -114,5 +152,6 @@ namespace ServerManager {
                 Token = Guid.NewGuid().ToString(),
             };
         }
+
     }
 }
