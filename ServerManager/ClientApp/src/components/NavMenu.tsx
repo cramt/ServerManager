@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 import { MasterLogin } from './MasterLogin';
 import { MasterAuthorizedComponent } from './MasterAuthorizedComponent';
+import { TokenAuthorizedComponent } from './TokenAuthorizedComponent';
 
 export class NavMenu extends Component {
     displayName = NavMenu.name
@@ -25,9 +26,18 @@ export class NavMenu extends Component {
                                 <Glyphicon glyph='home' /> Token Login
                             </NavItem>
                         </LinkContainer>
+                        {(() => {
+                            if (TokenAuthorizedComponent.token != null) {
+                                return <LinkContainer to={'/serveractions'}>
+                                    <NavItem>
+                                        <Glyphicon glyph='th-list' /> Server Actions
+                                    </NavItem>
+                                </LinkContainer>
+                            }
+                        })()}
                         <LinkContainer to={'/masterlogin'}>
                             <NavItem>
-                                <Glyphicon glyph='th-list' /> Master Login
+                                <Glyphicon glyph='home' /> Master Login
                             </NavItem>
                         </LinkContainer>
                         {(() => {

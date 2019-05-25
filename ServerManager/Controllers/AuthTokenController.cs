@@ -7,7 +7,7 @@ namespace ServerManager.Controllers {
     [Route("api/AuthTokenController")]
     public class AuthTokenController : Controller {
         public class GetTokensArguments : LoginController.LoginArguments {
-            
+
         }
         [HttpPost("GetTokens")]
         public IEnumerable<AuthToken> GetTokens([FromBody] GetTokensArguments getTokensArguments) {
@@ -59,6 +59,16 @@ namespace ServerManager.Controllers {
                 return false;
             }
         }
+        public class GetMyselfArguments : LoginController.AuthLoginArguments {
 
+        }
+        [HttpPost("GetMyself")]
+        public AuthToken GetMyself([FromBody] GetMyselfArguments getMyselfArguments) {
+            Console.WriteLine(getMyselfArguments.token);
+            Console.WriteLine(getMyselfArguments.token);
+            Console.WriteLine(getMyselfArguments.token);
+            Console.WriteLine(getMyselfArguments.token);
+            return AuthToken.AuthTokenHandler.Tokens.FirstOrDefault(x => x.Token == getMyselfArguments.token);
+        }
     }
 }

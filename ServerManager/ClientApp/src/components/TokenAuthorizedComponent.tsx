@@ -6,7 +6,7 @@ export class TokenAuthorizedComponent<T> extends React.Component<RouteComponentP
 
     componentDidMount() {
         if (TokenAuthorizedComponent.token === null) {
-            //this.props.history.push("/masterlogin")
+            this.props.history.push("/tokenlogin")
         }
     }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
+import { TokenAuthorizedComponent } from './TokenAuthorizedComponent';
 
 export class TokenLogin extends Component<RouteComponentProps<{}>, {}> {
     displayName = TokenLogin.name
@@ -9,17 +10,19 @@ export class TokenLogin extends Component<RouteComponentProps<{}>, {}> {
     }
 
     login = () => {
+        let token = this.tokenInput!.value
         fetch("api/LoginController/AuthLogin", {
             method: "post",
-            body: JSON.stringify({ token: this.tokenInput!.value }),
+            body: JSON.stringify({ token: token }),
             headers: {
                 'Content-Type': 'application/json',
             }
         }).then(async x => {
             let text = (await x.text())
-            console.log(text)
             if (text == "true") {
-                
+                TokenAuthorizedComponent.token = token
+                this.setState({})
+                this.props.history.push("/serveractions")
             }
             else {
                 this.errorMessage = "token didnt match"
