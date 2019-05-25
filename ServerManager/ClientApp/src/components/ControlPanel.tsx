@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { AuthorizedComponent } from './AuthorizedComponent';
+import { MasterAuthorizedComponent } from './MasterAuthorizedComponent';
 import { parseAuthToken, AuthToken } from './AuthToken';
+import { formatDate } from '../utilities';
 
-export class ControlPanel extends AuthorizedComponent<{}>  {
+export class ControlPanel extends MasterAuthorizedComponent<{}>  {
     displayName = ControlPanel.name;
     authTokens: AuthToken[] | null = null;
     constructor(props: RouteComponentProps<{}>) {
@@ -14,7 +15,7 @@ export class ControlPanel extends AuthorizedComponent<{}>  {
         super.componentDidMount();
         fetch("api/AuthTokenController/GetTokens", {
             method: "post",
-            body: JSON.stringify({ username: AuthorizedComponent.username, password: AuthorizedComponent.password }),
+            body: JSON.stringify({ username: MasterAuthorizedComponent.username, password: MasterAuthorizedComponent.password }),
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -27,18 +28,6 @@ export class ControlPanel extends AuthorizedComponent<{}>  {
             this.authTokens = (JSON.parse(rawData) as any[]).map(parseAuthToken)
             this.setState({})
         })
-    }
-
-    formatDate(date: Date): string {
-        let options: Intl.DateTimeFormatOptions = {
-            second: "2-digit",
-            minute: "2-digit",
-            hour: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            day: "2-digit"
-        }
-        return date.toLocaleDateString("en-GB", options)
     }
 
     render() {
@@ -59,13 +48,13 @@ export class ControlPanel extends AuthorizedComponent<{}>  {
                             <th>edit</th>
                         </tr></thead>
                         <tbody>
-                            {this.authTokens.map(x => (
-                                <tr>
+                            {this.authTokens.map((x, i) => (
+                                <tr key={i}>
                                     <td>
                                         {x.token}
                                     </td>
                                     <td>
-                                        {this.formatDate(new Date(x.expirationDate*1000))}
+                                        {formatDate(new Date(x.expirationDate * 1000))}
                                     </td>
                                     <td>
                                         <button onClick={() => {

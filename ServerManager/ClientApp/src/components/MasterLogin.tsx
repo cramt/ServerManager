@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { AuthorizedComponent } from './AuthorizedComponent';
+import { MasterAuthorizedComponent } from './MasterAuthorizedComponent';
 
 export class MasterLogin extends Component<RouteComponentProps<{}>, {}> {
     displayName = MasterLogin.name
@@ -35,8 +35,8 @@ export class MasterLogin extends Component<RouteComponentProps<{}>, {}> {
                     }
                 }).then(async x => {
                     if ((await x.text()) == "true") {
-                        AuthorizedComponent.username = username
-                        AuthorizedComponent.password = password
+                        MasterAuthorizedComponent.username = username
+                        MasterAuthorizedComponent.password = password
                         this.setState({})
                         this.props.history.push("/controlpanel")
                     }

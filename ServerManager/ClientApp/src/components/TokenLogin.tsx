@@ -1,52 +1,31 @@
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { AuthorizedComponent } from './AuthorizedComponent';
 
 export class TokenLogin extends Component<RouteComponentProps<{}>, {}> {
     displayName = TokenLogin.name
+    tokenInput: HTMLInputElement | null = null
     constructor(props: RouteComponentProps<{}>) {
         super(props);
     }
 
-    usernameInput: HTMLInputElement | null = null
-    passwordInput: HTMLInputElement | null = null
-
     login = () => {
-        if (this.usernameInput != null && this.passwordInput != null) {
-            let pass = true;
-            if (this.usernameInput.value == "") {
-                pass = false;
-                this.errorMessage = "username is empty"
+        fetch("api/LoginController/AuthLogin", {
+            method: "post",
+            body: JSON.stringify({ token: this.tokenInput!.value }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(async x => {
+            let text = (await x.text())
+            console.log(text)
+            if (text == "true") {
+                
+            }
+            else {
+                this.errorMessage = "token didnt match"
                 this.setState({})
             }
-            if (this.passwordInput.value == "") {
-                pass = false;
-                this.errorMessage = "password is empty"
-                this.setState({})
-            }
-            if (pass) {
-                let username = this.usernameInput.value
-                let password = this.passwordInput.value
-                fetch("api/LoginController/Login", {
-                    method: "post",
-                    body: JSON.stringify({ username: username, password: password }),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }).then(async x => {
-                    if ((await x.text()) == "true") {
-                        AuthorizedComponent.username = username
-                        AuthorizedComponent.password = password
-                        this.setState({})
-                        this.props.history.push("/controlpanel")
-                    }
-                    else {
-                        this.errorMessage = "username and password didnt match"
-                        this.setState({})
-                    }
-                })
-            }
-        }
+        })
     }
 
     errorMessage: string = "";
@@ -60,12 +39,9 @@ export class TokenLogin extends Component<RouteComponentProps<{}>, {}> {
     render() {
         return (
             <div>
-                <h2>Master Login</h2>
-                <label>username: </label>
-                <input type="text" ref={e => { this.usernameInput = e }} onKeyUp={this.loginKeyPress} />
-                <br />
-                <label>password: </label>
-                <input type="password" ref={e => { this.passwordInput = e }} onKeyUp={this.loginKeyPress} />
+                <h2>Token Login</h2>
+                <label>token: </label>
+                <input type="text" ref={e => { this.tokenInput = e }} onKeyUp={this.loginKeyPress} />
                 <br />
                 <button onClick={this.login}>login</button>
                 <br />

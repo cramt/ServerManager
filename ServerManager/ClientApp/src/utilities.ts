@@ -20,3 +20,15 @@
     }
     return iso + timezoneStr;
 }
+
+export function formatDate(date: Date): string {
+    let options: Intl.DateTimeFormatOptions = {
+        second: "2-digit",
+        minute: "2-digit",
+        hour: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        day: "2-digit"
+    }
+    return date.toLocaleDateString("en-GB", options)
+}

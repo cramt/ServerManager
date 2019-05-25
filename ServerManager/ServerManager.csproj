@@ -26,17 +26,21 @@
     <None Remove="ClientApp\src\components\AuthorizedComponent.js" />
     <None Remove="ClientApp\src\components\AuthorizedComponent.js.map" />
     <None Remove="ClientApp\src\components\AuthorizedComponent.js.map" />
-    <None Remove="ClientApp\src\components\AuthorizedComponent.tsx" />
     <None Remove="ClientApp\src\components\AuthToken.js" />
     <None Remove="ClientApp\src\components\AuthToken.js" />
     <None Remove="ClientApp\src\components\AuthToken.js.map" />
     <None Remove="ClientApp\src\components\AuthToken.js.map" />
     <None Remove="ClientApp\src\components\AuthToken.tsx" />
+    <None Remove="ClientApp\src\components\MasterAuthorizedComponent.tsx" />
+    <None Remove="ClientApp\src\components\TokenAuthorizedComponent.tsx" />
     <None Remove="ClientApp\src\utilities.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\components\AuthorizedComponent.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\TokenAuthorizedComponent.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\components\MasterAuthorizedComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\AuthToken.tsx" />
     <TypeScriptCompile Include="ClientApp\src\utilities.ts" />
   </ItemGroup>

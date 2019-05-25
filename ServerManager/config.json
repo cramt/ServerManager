@@ -5,8 +5,20 @@
   },
   "servers": [
     {
-      "name": "server_name",
-      "commandToStart": "soaa"
+      "name": "minecraft start",
+      "commandToStart": "aaaa"
+    },
+    {
+      "name": "minecraft stop",
+      "commandToStart": "aaaa"
+    },
+    {
+      "name": "ttt start",
+      "commandToStart": "aaaa"
+    },
+    {
+      "name": "ttt stop",
+      "commandToStart": "aaaa"
     }
   ],
   "ip": "192.168.1.1"

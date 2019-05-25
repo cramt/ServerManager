@@ -20,5 +20,13 @@ namespace ServerManager.Controllers {
             return Program.config.root.username == arguments.username && Program.config.root.password == arguments.password;
         }
 
+        public class AuthLoginArguments {
+            public string token { get; set; }
+        }
+        [HttpPost("AuthLogin")]
+        public bool AuthLogin([FromBody] AuthLoginArguments authLoginArguments) {
+            AuthToken token = AuthToken.AuthTokenHandler.Tokens.FirstOrDefault(x => x.Token == authLoginArguments.token);
+            return token != null;
+        }
     }
 }

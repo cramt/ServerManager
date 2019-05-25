@@ -4,7 +4,7 @@ import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap-typescript';
 import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 import { MasterLogin } from './MasterLogin';
-import { AuthorizedComponent } from './AuthorizedComponent';
+import { MasterAuthorizedComponent } from './MasterAuthorizedComponent';
 
 export class NavMenu extends Component {
     displayName = NavMenu.name
@@ -20,19 +20,9 @@ export class NavMenu extends Component {
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        <LinkContainer to={'/'} exact>
+                        <LinkContainer to={'/tokenlogin'} exact>
                             <NavItem>
-                                <Glyphicon glyph='home' /> Home
-                            </NavItem>
-                        </LinkContainer>
-                        <LinkContainer to={'/counter'}>
-                            <NavItem>
-                                <Glyphicon glyph='education' /> Counter
-                            </NavItem>
-                        </LinkContainer>
-                        <LinkContainer to={'/fetchdata'}>
-                            <NavItem>
-                                <Glyphicon glyph='th-list' /> Fetch data
+                                <Glyphicon glyph='home' /> Token Login
                             </NavItem>
                         </LinkContainer>
                         <LinkContainer to={'/masterlogin'}>
@@ -41,7 +31,7 @@ export class NavMenu extends Component {
                             </NavItem>
                         </LinkContainer>
                         {(() => {
-                            if (AuthorizedComponent.username != null && AuthorizedComponent.password != null) {
+                            if (MasterAuthorizedComponent.username != null && MasterAuthorizedComponent.password != null) {
                                 return <LinkContainer to={'/controlpanel'}>
                                     <NavItem>
                                         <Glyphicon glyph='th-list' /> Control Panel
