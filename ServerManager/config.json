@@ -6,20 +6,25 @@
   "servers": [
     {
       "name": "minecraft start",
-      "commandToStart": "aaaa"
+      "commandToStart": "aaaa",
+      "onDeviceProcess": false
     },
     {
       "name": "minecraft stop",
-      "commandToStart": "aaaa"
+      "commandToStart": "aaaa",
+      "onDeviceProcess": false
     },
     {
       "name": "ttt start",
-      "commandToStart": "aaaa"
+      "commandToStart": "aaaa",
+      "onDeviceProcess": false
     },
     {
       "name": "ttt stop",
-      "commandToStart": "aaaa"
+      "commandToStart": "aaaa",
+      "onDeviceProcess": false
     }
   ],
-  "ip": "192.168.1.1"
+  "ip": "127.0.0.1",
+  "port": 666
 }

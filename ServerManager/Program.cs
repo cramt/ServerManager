@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
@@ -23,9 +25,13 @@ namespace ServerManager {
         public static Config config;
         public static void Main(string[] args) {
             config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "config.json")));
+
+
             AuthToken.AuthTokenHandler.Init();
             AuthToken.AuthTokenHandler.GenerateNew();
             CreateWebHostBuilder(args).Build().Run();
+
+
             Thread.Sleep(-1);
         }
 

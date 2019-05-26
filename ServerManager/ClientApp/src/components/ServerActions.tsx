@@ -59,14 +59,23 @@ export class ServerActions extends TokenAuthorizedComponent<{}>  {
                             </td>
                         </th></thead>
                         <tbody>
-                            {this.myself.serversAuthorized.map(x => (
+                            {this.myself.serversAuthorized.map(server => (
                                 <tr>
                                     <td>
-                                        {x}
+                                        {server}
                                     </td>
                                     <td>
                                         <button onClick={() => {
-                                            alert(x)
+                                            fetch("api/ServerController/RunServerAction", {
+                                                method: "post",
+                                                body: JSON.stringify({ token: TokenAuthorizedComponent.token, serverName: server }),
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                }
+                                            }).then(async x => {
+                                                let rawData = await x.text()
+                                                alert(rawData);
+                                            })
                                         }}>run</button>
                                     </td>
                                 </tr>
