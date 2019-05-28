@@ -47,6 +47,9 @@ namespace ServerManager {
                 if (env.IsDevelopment()) {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
+                else {
+                    spa.Options.SourcePath = "ClientApp/build";
+                }
             });
         }
     }
