@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ServerManager {
     public class AuthToken {
         public static class AuthTokenHandler {
-            private static string TOKEN_DIR { get; } = Path.Combine(Directory.GetCurrentDirectory(), "tokens");
+            private static string TOKEN_DIR { get; } = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "tokens");
             private static string TOKEN_EXT { get; } = ".tkn";
             private static string PathToToken(AuthToken token) {
                 return PathToToken(token.Token);
