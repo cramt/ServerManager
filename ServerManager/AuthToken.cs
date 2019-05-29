@@ -96,7 +96,7 @@ namespace ServerManager {
                 if (!_locks.ContainsKey(token)) {
                     throw new ArgumentException("tokens lock doesnt exist");
                 }
-                string pathToToken = Path.Combine(Directory.GetCurrentDirectory(), "tokens", token + ".tkn");
+                string pathToToken = PathToToken(token);
                 string readValue = null;
                 lock (_locks[token]) {
                     if (!File.Exists(pathToToken)) {
@@ -123,7 +123,7 @@ namespace ServerManager {
                 if (!_locks.ContainsKey(token)) {
                     throw new ArgumentException("tokens lock doesnt exist");
                 }
-                string pathToToken = Path.Combine(Directory.GetCurrentDirectory(), "tokens", token + ".tkn");
+                string pathToToken = PathToToken(token);
                 _tokens.Remove(token);
                 lock (_locks[token]) {
                     if (!File.Exists(pathToToken)) {

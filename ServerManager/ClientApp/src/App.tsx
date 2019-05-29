@@ -13,7 +13,6 @@ export default class App extends Component {
     render() {
         return (
             <Layout>
-                <Route path='/' component={MasterLogin} />
                 <Route path='/masterlogin' component={MasterLogin} />
                 <Route path='/controlpanel' component={ControlPanel} />
                 <Route path='/authtoken/:id' component={AuthTokenEdit} />
