@@ -30,7 +30,6 @@ namespace ServerManager {
                 return;
             }
             AuthToken.AuthTokenHandler.Init();
-            AuthToken.AuthTokenHandler.GenerateNew();
             CreateWebHostBuilder(args).Build().Run();
 
 
