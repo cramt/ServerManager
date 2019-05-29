@@ -25,6 +25,7 @@
       "onDeviceProcess": false
     }
   ],
-  "ip": "127.0.0.1",
-  "port": 666
+  "handlerIp": "127.0.0.1",
+  "handlerPort": 666,
+  "httpPort":  80
 }

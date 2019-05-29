@@ -37,7 +37,7 @@ namespace ServerManager.Controllers {
                 return await server.commandToStart.BashAsync();
             }
             else {
-                return await Utilities.SendTcpRequest(Program.config.ip, Program.config.port, server.commandToStart);
+                return await Utilities.SendTcpRequest(Program.config.handlerIp, Program.config.handlerPort, server.commandToStart);
             }
         }
     }
