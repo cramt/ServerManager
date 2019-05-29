@@ -23,10 +23,12 @@ namespace ServerManager {
             return (dateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
         }
         public static Config config;
-        public static void Main(string[] args) {
-            config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "config.json")));
-
-
+        public static void Main(string[] args) { 
+            config = Config.Load();
+            if(config == null) {
+                Console.WriteLine("config couldnt be loaded");
+                return;
+            }
             AuthToken.AuthTokenHandler.Init();
             AuthToken.AuthTokenHandler.GenerateNew();
             CreateWebHostBuilder(args).Build().Run();
