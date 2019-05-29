@@ -13,25 +13,25 @@ export class ControlPanel extends MasterAuthorizedComponent<{}>  {
 
     componentDidMount() {
         super.componentDidMount();
-        fetch("api/AuthTokenController/GetTokens", {
-            method: "post",
-            body: JSON.stringify({ username: MasterAuthorizedComponent.username, password: MasterAuthorizedComponent.password }),
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then(async x => {
-            let rawData = await x.text()
-            if (rawData === null) {
-                //todo some error thing
-                return;
-            }
-            this.authTokens = (JSON.parse(rawData) as any[]).map(parseAuthToken)
-            this.setState({})
-        })
     }
 
     render() {
         if (this.authTokens === null) {
+            fetch("api/AuthTokenController/GetTokens", {
+                method: "post",
+                body: JSON.stringify({ username: MasterAuthorizedComponent.username, password: MasterAuthorizedComponent.password }),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(async x => {
+                let rawData = await x.text()
+                if (rawData === null) {
+                    //todo some error thing
+                    return;
+                }
+                this.authTokens = (JSON.parse(rawData) as any[]).map(parseAuthToken)
+                this.setState({})
+            })
             return (
                 <div>
                     loading
@@ -65,6 +65,23 @@ export class ControlPanel extends MasterAuthorizedComponent<{}>  {
                             ))}
                         </tbody>
                     </table>
+                    <button onClick={() => {
+                        fetch("api/AuthTokenController/NewToken", {
+                            method: "post",
+                            body: JSON.stringify({ username: MasterAuthorizedComponent.username, password: MasterAuthorizedComponent.password }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        }).then(async x => {
+                            let rawData = await x.text()
+                            if (rawData === null) {
+                                //todo some error thing
+                                return;
+                            }
+                            this.authTokens = null;
+                            this.setState({})
+                        })
+                    }}>generate new</button>
                 </div>
             );
         }

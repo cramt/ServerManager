@@ -70,5 +70,17 @@ namespace ServerManager.Controllers {
             Console.WriteLine(getMyselfArguments.token);
             return AuthToken.AuthTokenHandler.Tokens.FirstOrDefault(x => x.Token == getMyselfArguments.token);
         }
+        public class NewTokenArguments : LoginController.LoginArguments {
+
+        }
+        [HttpPost("NewToken")]
+        public AuthToken NewToken([FromBody] NewTokenArguments newTokenArguments) {
+            if (LoginController.Authorize(newTokenArguments)) {
+                return AuthToken.AuthTokenHandler.GenerateNew();
+            }
+            else {
+                return null;
+            }
+        }
     }
 }
