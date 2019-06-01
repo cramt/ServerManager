@@ -43,7 +43,7 @@ export class TokenLogin extends Component<RouteComponentProps<{}>, {}> {
         return (
             <div>
                 <h2>Token Login</h2>
-                <label>token: </label>
+                <label>Token: </label>
                 <input type="text" ref={e => { this.tokenInput = e }} onKeyUp={this.loginKeyPress} />
                 <br />
                 <button onClick={this.login}>login</button>

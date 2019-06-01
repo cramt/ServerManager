@@ -41,15 +41,22 @@ export class ControlPanel extends MasterAuthorizedComponent<{}>  {
         else {
             return (
                 <div>
-                    <table>
+                    <table style={{
+                        border: "1"
+                    }}>
                         <thead><tr>
-                            <th>token name</th>
-                            <th>expiration date</th>
-                            <th>edit</th>
+                            <th>Name</th>
+                            <th>Token Name</th>
+                            <th>Expiration Date</th>
+                            <th>Edit</th>
+
                         </tr></thead>
                         <tbody>
                             {this.authTokens.map((x, i) => (
                                 <tr key={i}>
+                                    <td>
+                                        {x.name}
+                                    </td>
                                     <td>
                                         {x.token}
                                     </td>
@@ -59,7 +66,7 @@ export class ControlPanel extends MasterAuthorizedComponent<{}>  {
                                     <td>
                                         <button onClick={() => {
                                             this.props.history.push("/authtoken/" + x.token)
-                                        }}>edit</button>
+                                        }}>Edit</button>
                                     </td>
                                 </tr>
                             ))}
@@ -81,7 +88,7 @@ export class ControlPanel extends MasterAuthorizedComponent<{}>  {
                             this.authTokens = null;
                             this.setState({})
                         })
-                    }}>generate new</button>
+                    }}>Generate New</button>
                 </div>
             );
         }

@@ -61,10 +61,10 @@ export class MasterLogin extends Component<RouteComponentProps<{}>, {}> {
         return (
             <div>
                 <h2>Master Login</h2>
-                <label>username: </label>
+                <label>Username: </label>
                 <input type="text" ref={e => { this.usernameInput = e }} onKeyUp={this.loginKeyPress} />
                 <br />
-                <label>password: </label>
+                <label>Password: </label>
                 <input type="password" ref={e => { this.passwordInput = e }} onKeyUp={this.loginKeyPress} />
                 <br />
                 <button onClick={this.login}>login</button>

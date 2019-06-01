@@ -6,12 +6,12 @@
   "servers": [
     {
       "name": "minecraft start",
-      "commandToStart": "aaaa",
+      "commandToStart": "minecraft_start",
       "onDeviceProcess": false
     },
     {
       "name": "minecraft stop",
-      "commandToStart": "aaaa",
+      "commandToStart": "minecraft_stop",
       "onDeviceProcess": false
     },
     {

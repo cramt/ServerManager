@@ -44,18 +44,18 @@ export class ServerActions extends TokenAuthorizedComponent<{}>  {
             return (
                 <div>
                     <p>
-                        token: {this.myself.token}
+                        Token: {this.myself.token}
                     </p>
                     <p>
-                        expiration: {formatDate(new Date(this.myself.expirationDate * 1000))}
+                        Expiration: {formatDate(new Date(this.myself.expirationDate * 1000))}
                     </p>
                     <table>
                         <thead><th>
                             <td>
-                                server action
+                                Server Action
                             </td>
                             <td>
-                                run
+                                Run
                             </td>
                         </th></thead>
                         <tbody>
@@ -76,7 +76,7 @@ export class ServerActions extends TokenAuthorizedComponent<{}>  {
                                                 let rawData = await x.text()
                                                 alert(rawData);
                                             })
-                                        }}>run</button>
+                                        }}>Run</button>
                                     </td>
                                 </tr>
                             ))}

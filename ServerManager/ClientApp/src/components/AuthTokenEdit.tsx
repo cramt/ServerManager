@@ -59,8 +59,11 @@ export class AuthTokenEdit extends MasterAuthorizedComponent<AuthTokenComponentP
         if (this.servers !== null && this.authToken !== null) {
             return (
                 <div>
+                    <label>Name: </label><input defaultValue={this.authToken.name} onKeyUp={(e) => {
+                        this.authToken!.name = e.currentTarget.value;
+                    }} />
                     <p>
-                        token id: {this.authToken.token}
+                        Token Id: {this.authToken.token}
                     </p>
                     <DatePicker
                         selected={this.expirationDate}
@@ -82,10 +85,10 @@ export class AuthTokenEdit extends MasterAuthorizedComponent<AuthTokenComponentP
                     <table>
                         <thead><tr>
                             <th>
-                                server
+                                Server
                             </th>
                             <th>
-                                allowed
+                                Allowed
                             </th>
                         </tr></thead>
                         <tbody>
@@ -126,7 +129,7 @@ export class AuthTokenEdit extends MasterAuthorizedComponent<AuthTokenComponentP
                         }).then(async x => {
                             let rawData = await x.text()
                         })
-                    }}>save</button>
+                    }}>Save</button>
                     <br />
                     <br />
                     <button onClick={() => {
@@ -140,7 +143,7 @@ export class AuthTokenEdit extends MasterAuthorizedComponent<AuthTokenComponentP
                             let rawData = await x.text()
                             this.props.history.push("/controlpanel")
                         })
-                    }}>delete</button>
+                    }}>Delete</button>
                 </div>
             )
         }
